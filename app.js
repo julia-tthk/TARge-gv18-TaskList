@@ -1,4 +1,3 @@
-//select html elements and and assign their values to the variables
 const form = document.querySelector('#task-form');
 const taskInput = document.querySelector('#task');
 const taskList = document.querySelector('.collection');
