@@ -58,6 +58,26 @@ function removeTask(event){
         if(confirm('Are you sure you want to delete the task?')){
             //remove the entire li element
             event.target.parentElement.remove();
+
+            //Remove from local storage
+            removeFromLocalStorage(event.target.parentElement);
         }
     }
+}
+
+function removeFromLocalStorage(taskItem){
+    let tasks;
+    if(localStorage.getItem('tasks') === null){
+        tasks =  [];
+    } else {
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+
+    tasks.forEach(function(task, index) {
+        if(taskItem.textContent.slice(0, -1) === task){
+            tasks.splice(index, 1);
+        }
+    });
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
