@@ -7,8 +7,41 @@ const clearBtn = document.querySelector('.clear-tasks');
 loadEventListeners();
 
 function loadEventListeners(){
+    //get tasks from local storage on load
+    document.addEventListener('DOMContentLoaded', getTasks);
+    //add a task to the UI and local storage
     form.addEventListener('submit', addTask);
     taskList.addEventListener('click', removeTask);
+}
+
+function getTasks(){
+    let tasks;
+
+    if(localStorage.getItem('tasks') === null) {
+        tasks = [];
+    } else {
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+
+    tasks.forEach(task => {
+        //for each task from tasks array - create an li element
+        const li = document.createElement('li');
+        //add class name to the li element
+        li.className = 'collection-item';
+        //create a text-node and append it to the li
+        li.appendChild(document.createTextNode(task));
+        //create an anchor tag 
+        const removeLink = document.createElement('a');
+        //ad a class name to the removeLink element
+        removeLink.className = 'delete-item secondary-content';
+        removeLink.innerHTML = 'X';
+        li.appendChild(removeLink);
+
+        //add li element to the ul collection
+        taskList.appendChild(li);
+    });
+
+
 
 }
 
